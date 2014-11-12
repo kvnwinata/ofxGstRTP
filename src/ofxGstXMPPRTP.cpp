@@ -402,8 +402,8 @@ ofxGstRTPClient & ofxGstXMPPRTP::getClient(){
 	return *client;
 }
 
-ofxXMPP & ofxGstXMPPRTP::getXMPP(){
-	return *xmpp;
+shared_ptr<ofxXMPP> ofxGstXMPPRTP::getXMPP(){
+	return xmpp;
 }
 
 void ofxGstXMPPRTP::close(){

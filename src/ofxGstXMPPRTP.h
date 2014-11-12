@@ -102,7 +102,7 @@ public:
 
 	/// accessor for the XMPP utility class, can be used for more advanced uses
 	/// but usually not needed
-	ofxXMPP & getXMPP();
+	shared_ptr<ofxXMPP> getXMPP();
 
 	ofParameterGroup parameters;
 
