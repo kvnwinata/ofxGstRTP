@@ -81,7 +81,7 @@ void ofApp::setup(){
 
 		// add a capabilities string so other clients can recognize that we
 		// are running this app and not some other XMPP software like gtalk
-		rtp.getXMPP().setCapabilities("telekinect");
+		rtp.getXMPP()->setCapabilities("telekinect");
 
 		// start the connection to the XMPP server
 		rtp.connectXMPP(server,user,pwd);
@@ -195,7 +195,7 @@ void ofApp::setup(){
 
 	// add a listener to receive a callback whenever there's a chat
 	// message from the XMPP client
-	ofAddListener(rtp.getXMPP().newMessage,this,&ofApp::onNewMessage);
+	ofAddListener(rtp.getXMPP()->newMessage,this,&ofApp::onNewMessage);
 
 
 	// add listeners to receive the call live cycle callbacks
@@ -511,7 +511,7 @@ void ofApp::draw(){
 	ofSetColor(255);
 	ofRect(ofGetWidth()-300,0,300,ofGetHeight());
 	if(guiState==Friends){
-		const vector<ofxXMPPUser> & friends = rtp.getXMPP().getFriendsWithCapability("telekinect");
+		const vector<ofxXMPPUser> & friends = rtp.getXMPP()->getFriendsWithCapability("telekinect");
 		size_t i=0;
 
 		for(;i<friends.size();i++){
@@ -591,7 +591,7 @@ void ofApp::keyPressed(int key){
 		callingState = Disconnected;
 	}else if(key==OF_KEY_LEFT_CONTROL){
 		// test to check that ending the xmpp connection works properly
-		rtp.getXMPP().stop();
+		rtp.getXMPP()->stop();
 		ofXml settings;
 		if(settings.load("settings.xml")){
 			string server = settings.getValue("server");
@@ -624,10 +624,10 @@ void ofApp::mousePressed(int x, int y, int button){
 	// interaction for friends list and accept/decline a call guis
 	ofVec2f mouse(x,y);
 	if(callingState==Disconnected && guiState==Friends){
-		ofRectangle friendsRect(ofGetWidth()-300,0,300,rtp.getXMPP().getFriends().size()*20);
+		ofRectangle friendsRect(ofGetWidth()-300,0,300,rtp.getXMPP()->getFriends().size()*20);
 		if(friendsRect.inside(mouse)){
 			calling = mouse.y/20;
-			rtp.call(rtp.getXMPP().getFriendsWithCapability("telekinect")[calling]);
+			rtp.call(rtp.getXMPP()->getFriendsWithCapability("telekinect")[calling]);
 			callingState = Calling;
 		}
 	}else if(callingState == ReceivingCall){
